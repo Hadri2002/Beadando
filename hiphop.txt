@@ -1,0 +1,5 @@
+James Jameson	Category.SOLO	True	5	7	12
+Royals	Category.DUO	True	5	3	9
+The Franks	Category.TEAM	True	6	4	10
+Szenes	Category.DUO	False	6	8	14
+Chaos	Category.TEAM	False	9	10	20
