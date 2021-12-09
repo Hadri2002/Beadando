@@ -2,7 +2,7 @@ from dancers import *
 
 class HipHop (Dancer):
 
-    def __init__(self, name: str, category: Category, entryFeePaid = False, subscoreTechnique = 0, subscoreStyle = 0):
+    def __init__(self, name: str, category: Category, entryFeePaid = False, subscoreTechnique = 0, subscoreStyle = 0, score = 0):
         """
         Konstruktor a származtatott osztályhou
         :param name: A táncos, illetve a formáció neve
@@ -14,6 +14,9 @@ class HipHop (Dancer):
         Dancer.__init__(self, name, category, entryFeePaid, subscoreTechnique)
         self.subscoreStyle = subscoreStyle
         self.score = subscoreTechnique + subscoreStyle
+        if score != 0:
+            self.score = score
+
 
     def audienceAward(self):
         """
@@ -23,5 +26,6 @@ class HipHop (Dancer):
 
         if self.score == self.subscoreTechnique + self.subscoreStyle:
             self.score += 1
+            print("\nA pont jóváírása sikeresen megtörtént\n")
         else:
-            print(self.name, "számára már jóvá lett írva a közönségdíj miatt járó plusz pont!")
+            print("\n", self.name, "számára már jóvá lett írva a közönségdíj miatt járó plusz pont!\n")
