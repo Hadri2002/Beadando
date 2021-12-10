@@ -7,3 +7,4 @@ Ribcage	Category.DUO	False	4	5	9
 Galaxisok	Category.DUO	True	5	8	13
 Deepslate	Category.DUO	False	5	5	11
 Ginny	Category.SOLO	True	7	3	10
+Families	Category.TEAM	True	3	6	9
