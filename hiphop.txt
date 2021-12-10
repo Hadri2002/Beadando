@@ -1,7 +1,9 @@
 James Jameson	Category.SOLO	True	5	7	12
 Royals	Category.DUO	True	5	3	9
 The Franks	Category.TEAM	True	6	4	10
-Szenes	Category.DUO	False	6	8	14
+Szenes	Category.DUO	False	6	8	15
 Chaos	Category.TEAM	True	9	10	20
 Sajt	Category.DUO	False	3	6	9
 Xdinary	Category.SOLO	True	4	6	10
+Lost Cause	Category.TEAM	True	0	0	0
+Izzy	Category.SOLO	True	7	10	18

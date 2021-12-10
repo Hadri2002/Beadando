@@ -4,7 +4,7 @@ from contemporary import *
 
 def menu_options():
     """
-    A menüpontok kiírására alkalmas függvény <3
+    A menüpontok kiírására alkalmas függvény
     """
 
     print("Válasszon az alábbi menüpontok közül:\n\t0 - Kilépés"
@@ -14,129 +14,105 @@ def menu_options():
           "\n\t4 - Nyertes lekérése")
 
 
-def newCompetitor(hiphop: list, contemporary: list) -> None:
+def new_competitor(hiphop_list: list, contemporary_list: list) -> None:
     """
     Új versenyző felvételére használható függvény, melyben a megfelelő adatokat először egy osztály példányába
     elmentjük, majd a fájlba kiiratjuk
-    :param hiphop: Az eddig felvitt hiphop táncosok adatait tartalmazó lista.
-    :param contemporary: Az eddig felvitt hiphop táncosok adatait tartalmazó lista.
+    :param hiphop_list: Az eddig felvitt hiphop_list táncosok adatait tartalmazó lista.
+    :param contemporary_list: Az eddig felvitt hiphop_list táncosok adatait tartalmazó lista.
     :return: felveszi az új versenyzőt az adatbázisba (void függvény)
     """
 
-    styleSelect = 0
-    tempStyle = ""
-    tester = 0
+    style_select = 0
     name = ""
-    while styleSelect == 0:
+    while style_select == 0:
         try:
-            tempStyle = int(input(
+            temp_style = int(input(
                 "Adja meg, hogy melyik stílusban szeretne felvenni egy új versenyzőt! (1 - hiphop, 2 - kortárs) "))
+            if temp_style == 1 or temp_style == 2:
+                style_select = temp_style
+            else:
+                print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+            print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
 
-        if tempStyle == 1 or tempStyle == 2:
-            styleSelect = tempStyle
+    if style_select == 1:  # hiphop_list
 
-        if styleSelect == 1:  # hiphop
+        # versenyző adatainak felvétele
+        while name == "":
+            tester = 0
+            temp_name = input("Adja meg a táncos/formáció nevét! ")
+            for element in hiphop_list:
+                if temp_name == element[0]:
+                    print("\nMár van ilyen nevű versenyző!\n")
+                    tester += 1
+            if tester == 0:
+                name = temp_name
 
-            # versenyző adatainak felvétele
-            while name == "":
-                tester = 0
-                tempName = input("Adja meg a táncos/formáció nevét! ")
-                for element in hiphop:
-                    if tempName == element[0]:
-                        print("Már van ilyen nevű versenyző!")
-                        tester += 1
-                if tester == 0:
-                    name = tempName
+        category = category_select()
+        entry_fee_paid = entry_fee_select()
+        print("A technikához kapcsolódó pontszám felvétele: ")
+        subscore_technique = score_select()
+        print("A stílushoz kapcsolódó pontszám felvétele: ")
+        subscore_style = score_select()
+        dancer1 = HipHop(name, category, entry_fee_paid, subscore_technique, subscore_style)
 
-            category = categorySelect()
-            entryFee = entryFeeSelect()
-            print("A technikához kapcsolódó pontszám felvétele: ")
-            subscoreTechnique = scoreSelect()
-            print("A stílushoz kapcsolódó pontszám felvétele: ")
-            subscoreStyle = scoreSelect()
-            dancer1 = HipHop(name, category, entryFee, subscoreTechnique, subscoreStyle)
+        # versenyző adatainak fájlbaírása
+        f = open("hiphop.txt", "a")
+        f.write(dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid) + "\t" +
+                str(dancer1.subscoreTechnique) + "\t" + str(dancer1.subscoreStyle) + "\t" + str(
+            dancer1.score) + "\n")
+        f.close()
 
-            # versenyző adatainak fájlbaírása
-            f = open("hiphop.txt", "a")
-            f.write(dancer1.name)
-            f.write("\t")
-            f.write(str(dancer1.category))
-            f.write("\t")
-            f.write(str(dancer1.entryFeePaid))
-            f.write("\t")
-            f.write(str(dancer1.subscoreTechnique))
-            f.write("\t")
-            f.write(str(dancer1.subscoreStyle))
-            f.write("\t")
-            f.write(str(dancer1.score))
-            f.write("\n")
-            f.close()
+        print("\nA felvétel sikeresen megtörtént!\n")
 
-            print("A felvétel sikeresen megtörtént!")
+    elif style_select == 2:  # contemporary_list
 
-        elif styleSelect == 2:  # contemporary
+        # versenyző adatainak felvétele
+        while name == "":
+            tester = 0
+            temp_name = input("Adja meg a táncos/formáció nevét! ")
+            for element in contemporary_list:
+                if temp_name == element[0]:
+                    print("\nMár van ilyen nevű versenyző!\n")
+                    tester += 1
+            if tester == 0:
+                name = temp_name
 
-            # versenyző adatainak felvétele
-            while name == "":
-                tester = 0
-                tempName = input("Adja meg a táncos/formáció nevét! ")
-                for element in contemporary:
-                    if tempName == element[0]:
-                        print("Már van ilyen nevű versenyző!")
-                        tester += 1
-                if tester == 0:
-                    name = tempName
+        category = category_select()
+        entry_fee_paid = entry_fee_select()
+        print("A technikához kapcsolódó pontszám felvétele: ")
+        subscore_technique = score_select()
+        print("A kreativitáshoz kapcsolódó pontszám felvétele: ")
+        subscore_creativity = score_select()
+        dancer1 = Contemporary(name, category, entry_fee_paid, subscore_technique, subscore_creativity)
 
-            category = categorySelect()
-            entryFee = entryFeeSelect()
-            print("A technikához kapcsolódó pontszám felvétele: ")
-            subscoreTechnique = scoreSelect()
-            print("A kreativitáshoz kapcsolódó pontszám felvétele: ")
-            subscoreCreativity = scoreSelect()
-            dancer1 = Contemporary(name, category, entryFee, subscoreTechnique, subscoreCreativity)
+        # versenyző adatainak fájlbaírása
+        f = open("contemporary.txt", "a")
+        f.write(dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid) + "\t" +
+                str(dancer1.subscoreTechnique) + "\t" + str(dancer1.subscoreCreativity) + "\t" + str(
+            dancer1.score) + "\n")
+        f.close()
 
-            # versenyző adatainak fájlbaírása
-            f = open("contemporary.txt", "a")
-            f.write(dancer1.name)
-            f.write("\t")
-            f.write(str(dancer1.category))
-            f.write("\t")
-            f.write(str(dancer1.entryFeePaid))
-            f.write("\t")
-            f.write(str(dancer1.subscoreTechnique))
-            f.write("\t")
-            f.write(str(dancer1.subscoreCreativity))
-            f.write("\t")
-            f.write(str(dancer1.score))
-            f.write("\n")
-            f.close()
-
-            print("A felvétel sikeresen megtörtént!")
-
-        elif type(tempStyle) == int:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+        print("\nA felvétel sikeresen megtörtént!\n")
 
 
-def categorySelect() -> Category:
+def category_select() -> Category:
     """
     Segédfüggvény a kategória kiválasztásához. Integer megadásával visszaadja a választott kategóriát.
     :return: A kiválasztott kategória enumot adja vissza
     """
 
     value = 0
-    temp = ""
     while value == 0:
         try:
             temp = int(input("Adja a kategória számát! (1 - solo, 2 - duo, 3 - csapat) "))
+            if 3 >= temp >= 1:
+                value = temp
+            else:
+                print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a kategória kiválasztásához!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a kategória kiválasztásához!")
-
-        if type(temp) == int and temp >= 1 and temp <= 3:
-            value = temp
-        elif type(temp) == int and (temp <= 1 or temp >= 3):
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a kategória kiválasztásához!")
+            print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a kategória kiválasztásához!\n")
 
         if value == 1:
             return Category.SOLO
@@ -146,24 +122,23 @@ def categorySelect() -> Category:
             return Category.TEAM
 
 
-def entryFeeSelect() -> bool:
+def entry_fee_select() -> bool:
     """
     Segédfüggvény, mellyel kiválaszthatjuk, hogy a nevezési díjat kifizette-e a versenyző vagy nem
     :return: True ha kifizette, false ha nem fizette ki
     """
 
     value = 0
-    temp = ""
     while value == 0:
         try:
-            temp = int(input("Adja, hogy a versenyző kifizette-e a nevezési díjat! (1 - nincs kifizetve, 2 - ki van fizetve) "))
+            temp = int(input("Adja, hogy a versenyző kifizette-e a nevezési díjat! "
+                             "(1 - nincs kifizetve, 2 - ki van fizetve) "))
+            if 2 >= temp >= 1:
+                value = temp
+            else:
+                print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a kiválasztáshoz!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a kiválasztásához!")
-
-        if type(temp) == int and temp >= 1 and temp <= 2:
-            value = temp
-        elif type(temp) == int and (temp <= 1 or temp >= 2):
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a kiválasztásához!")
+            print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a kiválasztásához!\n")
 
         if value == 1:
             return False
@@ -171,26 +146,27 @@ def entryFeeSelect() -> bool:
             return True
 
 
-def scoreSelect() -> int:
+def score_select() -> int:
     """
     Segédfüggvény, mellyel megadhatjuk a pontokat egy 0-10-ig tartó skálán
     :return: A pontszám
     """
 
     value = -1
-    temp = ""
     while value == -1:
         try:
             temp = int(input("Adja meg a pontszámot (0 - 10-ig) "))
+            if 10 >= temp >= 0:
+                value = temp
+            else:
+                print("\nNem 0-10 közötti értéket adott meg!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem egész számot írjon be!")
+            print("\nHibás adatmegadás, kérem egész számot írjon be!\n")
 
-        if type(temp) == int and temp >= 0 and temp <= 10:
-            value = temp
     return value
 
 
-def listUpload(filepath: str) -> list:
+def list_upload(filepath: str) -> list:
     """
     A táncosok adatait tartalmazó lista feltöltésére alkalmas függvény
     :param filepath: a file amiben a versenyzők adatai vannak tárolva
@@ -203,286 +179,297 @@ def listUpload(filepath: str) -> list:
         adat = sor.strip().split("\t")
 
         if adat[1] == "Category.SOLO":
-            tempCategory = Category.SOLO
+            temp_category = Category.SOLO
         elif adat[1] == "Category.DUO":
-            tempCategory = Category.DUO
+            temp_category = Category.DUO
         else:
-            tempCategory = Category.TEAM
+            temp_category = Category.TEAM
+
+        temp_entry_fee = False
 
         if adat[2] == "True":
-            tempEntryFee = True
+            temp_entry_fee = True
         elif adat[2] == "False":
-            tempEntryFee = False
-        dancer_list = [adat[0], tempCategory, tempEntryFee, int(adat[3]), int(adat[4]), int(adat[5])]
+            temp_entry_fee = False
+        dancer_list = [adat[0], temp_category, temp_entry_fee, int(adat[3]), int(adat[4]), int(adat[5])]
         dancers_list.append(dancer_list)
 
     file.close()
     return dancers_list
 
 
-def audienceAward(hiphop: list, contemporary: list) -> None:
+def audience_award(hiphop_list: list, contemporary_list: list) -> None:
     """
     A versenyzők számára közönségdíjat hagyhatunk jóvá a függvénnyel. Minden versenyző maximum egyszer kaphat plusz
     pontot a közönségdíj alapján
-    :param hiphop: Az eddig felvitt hiphop táncosok adatait tartalmazó lista.
-    :param contemporary: Az eddig felvitt kortárs táncosok adatait tartalmazó lista.
+    :param hiphop_list: Az eddig felvitt hiphop_list táncosok adatait tartalmazó lista.
+    :param contemporary_list: Az eddig felvitt kortárs táncosok adatait tartalmazó lista.
     :return: A megadott versenyzőhöz tartozó pontszámot megváltoztatja, majd azt az adatbázisban is átírja
     """
 
     print("Az alábbi menüpont segítségével a közönségdíjat írhatja jóvá a választott táncos számára!")
-    styleSelect = 0
-    tempStyle = ""
+    style_select = 0
+    person_index = 0
 
-    hiphopNames = []
-    contemporaryNames = []
-    for element in hiphop:
-        hiphopNames.append(element[0])
-    for element in contemporary:
-        contemporaryNames.append(element[0])
+    hiphop_names = []
+    contemporary_names = []
+    for element in hiphop_list:
+        hiphop_names.append(element[0])
+    for element in contemporary_list:
+        contemporary_names.append(element[0])
 
-    while styleSelect == 0:
+    while style_select == 0:
         try:
-            tempStyle = int(input("Adja meg, hogy melyik stílusban szerepel a versenyző, akinek jóváírná a közönségdíjért járó plusz pontot! (1 - hiphop, 2 - kortárs) "))
+            temp_style = int(input("Adja meg, hogy melyik stílusban szerepel a versenyző, akinek jóváírná a "
+                                   "közönségdíjért járó plusz pontot! (1 - hiphop, 2 - kortárs) "))
+            if temp_style == 1 or temp_style == 2:
+                style_select = temp_style
+            else:
+                print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+            print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
 
-        if tempStyle == 1 or tempStyle == 2:
-            styleSelect = tempStyle
+    tester = 0
+    while tester == 0:
+        if style_select == 1:  # hiphop_list
+            dancer1 = HipHop("", Category.SOLO)
+            print("\nA nyilvántartásban szereplő versenyzők:", hiphop_names, "\n")
+            name = input("Adja meg a táncos / formáció nevét, akinek a közönségdíjat jóvá szeretné hagyni! ")
 
-            tester = 0
-            while tester == 0:
-                if styleSelect == 1: # hiphop
-                    print("A nyilvántartásban szereplő versenyzők:", hiphopNames)
-                    name = input("Adja meg a táncos / formáció nevét, akinek a közönségdíjat jóvá szeretné hagyni! ")
+            for element in hiphop_list:
+                if name == element[0]:
+                    dancer1 = HipHop(element[0], element[1], element[2], element[3], element[4], element[5])
+                    person_index = hiphop_list.index(element)
+                else:
+                    tester += 1
+            if tester == len(hiphop_list):
+                print("\nNincs ilyen versenyző a nyilvántartásban!\n")
+                tester = 0
 
-                    for element in hiphop:
-                        if name == element[0]:
-                            dancer1 = HipHop(element[0], element[1], element[2], element[3], element[4], element[5])
-                            personIndex = hiphop.index(element)
+            else:
+                dancer1.audience_award()  # pont jóváírása
+
+                # adat megváltoztatása a fájlban
+                with open("hiphop.txt", "r") as f:
+                    get_all = f.readlines()
+
+                with open("hiphop.txt", 'w') as f:
+                    for i, line in enumerate(get_all, 0):
+                        if i == person_index:
+                            f.writelines(dancer1.name + "\t" + str(dancer1.category) + "\t" +
+                                         str(dancer1.entryFeePaid)
+                                         + "\t" + str(dancer1.subscoreTechnique) + "\t" +
+                                         str(dancer1.subscoreStyle) + "\t" + str(dancer1.score) + "\n")
                         else:
-                            tester += 1
-                    if tester == len(hiphop):
-                        print("\nNincs ilyen versenyző a nyilvántartásban!\n")
-                        tester = 0
+                            f.writelines(line)
 
-                    else:
-                        dancer1.audienceAward()  # pont jóváírása
+        elif style_select == 2:  # kortárs
+            dancer1 = Contemporary("", Category.SOLO)
+            print("\nA nyilvántartásban szereplő versenyzők:", contemporary_names, "\n")
+            name = input("Adja meg a táncos / formáció nevét, akinek a közönségdíjat jóvá szeretné hagyni! ")
+            for element in contemporary_list:
+                if name == element[0]:
+                    dancer1 = Contemporary(element[0], element[1], element[2], element[3], element[4],
+                                           element[5])
+                    person_index = contemporary_list.index(element)
+                else:
+                    tester += 1
+            if tester == len(contemporary_list):
+                print("\nNincs ilyen versenyző a nyilvántartásban!\n")
+                tester = 0
 
-                        # adat megváltoztatása a fájlban
-                        with open("hiphop.txt", "r") as f:
-                            get_all = f.readlines()
+            else:
+                dancer1.audience_award()  # pont jóváírása
 
-                        with open("hiphop.txt", 'w') as f:
-                            for i, line in enumerate(get_all, 0):
-                                if i == personIndex:
-                                    f.writelines(dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
-                                                 + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(dancer1.subscoreStyle) + "\t" + str(dancer1.score) + "\n")
-                                else:
-                                    f.writelines(line)
+                # adat megváltoztatása a fájlban
+                with open("contemporary.txt", "r") as f:
+                    get_all = f.readlines()
 
-                elif styleSelect == 2:  # kortárs
-                    print("A nyilvántartásban szereplő versenyzők:", contemporaryNames)
-                    name = input("Adja meg a táncos / formáció nevét, akinek a közönségdíjat jóvá szeretné hagyni! ")
-                    for element in contemporary:
-                        if name == element[0]:
-                            dancer1 = Contemporary(element[0], element[1], element[2], element[3], element[4], element[5])
-                            personIndex = contemporary.index(element)
+                with open("contemporary.txt", 'w') as f:
+                    for i, line in enumerate(get_all, 0):
+                        if i == person_index:
+                            f.writelines(
+                                dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
+                                + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
+                                    dancer1.subscoreCreativity) + "\t" + str(dancer1.score) + "\n")
                         else:
-                            tester += 1
-                    if tester == len(contemporary):
-                        print("\nNincs ilyen versenyző a nyilvántartásban!\n")
-                        tester = 0
-
-                    else:
-                        dancer1.audienceAward() # pont jóváírása
-
-                        # adat megváltoztatása a fájlban
-                        with open("contemporary.txt", "r") as f:
-                            get_all = f.readlines()
-
-                        with open("contemporary.txt", 'w') as f:
-                            for i, line in enumerate(get_all, 0):
-                                if i == personIndex:
-                                    f.writelines(
-                                        dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
-                                        + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
-                                            dancer1.subscoreCreativity) + "\t" + str(dancer1.score) + "\n")
-                                else:
-                                    f.writelines(line)
-
-        elif type(tempStyle) == int:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+                            f.writelines(line)
 
 
-def entryFee(hiphop: list, contemporary: list) -> None:
+def entry_fee(hiphop_list: list, contemporary_list: list) -> None:
     """
     Amennyiben a vizsgált versenyző nem fizette be a nevezési díjat azt befizetetté teszi, ha pedig már befizette akkor
     nem történik változás
-    :param hiphop:
-    :param contemporary:
+    :param hiphop_list:
+    :param contemporary_list:
     :return:
     """
 
-    styleSelect = 0
-    tempStyle = ""
+    style_select = 0
+    person_index = 0
 
-    hiphopNames = []
-    contemporaryNames = []
-    for element in hiphop:
-        hiphopNames.append(element[0])
-    for element in contemporary:
-        contemporaryNames.append(element[0])
+    hiphop_names = []
+    contemporary_names = []
+    for element in hiphop_list:
+        hiphop_names.append(element[0])
+    for element in contemporary_list:
+        contemporary_names.append(element[0])
 
-    while styleSelect == 0:
+    while style_select == 0:
         try:
-            tempStyle = int(input(
-                "Adja meg, hogy melyik stílusban szerepel a versenyző, akinek a nevezési díját megtekintené! (1 - hiphop, 2 - kortárs) "))
+            temp_style = int(input(
+                "Adja meg, hogy melyik stílusban szerepel a versenyző, aki a nevezési díj befizetést tette! "
+                "(1 - hiphop, 2 - kortárs) "))
+            if temp_style == 1 or temp_style == 2:
+                style_select = temp_style
+            else:
+                print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
         except ValueError:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+            print("\nHibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!\n")
 
-        if tempStyle == 1 or tempStyle == 2:
-            styleSelect = tempStyle
+    tester = 0
+    while tester == 0:
 
-            tester = 0
-            while tester == 0:
+        if style_select == 1:  # hiphop_list
+            dancer1 = HipHop("", Category.SOLO)
+            print("\nA nyilvántartásban szereplő versenyzők: " + str(hiphop_names) + "\n")
+            name = input("Adja meg a táncos / formáció nevét, aki a befizetést tette! ")
+            for element in hiphop_list:
+                if name == element[0]:
+                    dancer1 = HipHop(element[0], element[1], element[2], element[3], element[4], element[5])
+                    person_index = hiphop_list.index(element)
+                else:
+                    tester += 1
+            if tester == len(hiphop_list):
+                print("\nNincs ilyen versenyző a nyilvántartásban!\n")
+                tester = 0
 
-                if styleSelect == 1:  # hiphop
-                    print("A nyilvántartásban szereplő versenyzők:", hiphopNames)
-                    name = input("Adja meg a táncos / formáció nevét, aki a befizetést tette! ")
-                    for element in hiphop:
-                        if name == element[0]:
-                            dancer1 = HipHop(element[0], element[1], element[2], element[3], element[4], element[5])
-                            personIndex = hiphop.index(element)
+            else:
+                if dancer1.entryFeePaid is True:
+                    print("\nA versenyző már befizette a nevezési díjat!\n")
+                else:
+                    print("\n" + dancer1.name + " rendezte a(z) " + str(dancer1.category.value) +
+                          " Ft tartozását!\n")
+                    dancer1.entryFeePaid = True
+
+                # fájlban átírás
+                with open("hiphop.txt", "r") as f:
+                    get_all = f.readlines()
+
+                with open("hiphop.txt", 'w') as f:
+                    for i, line in enumerate(get_all, 0):
+                        if i == person_index:
+                            f.writelines(
+                                dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
+                                + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
+                                    dancer1.subscoreStyle) + "\t" + str(dancer1.score) + "\n")
                         else:
-                            tester += 1
-                    if tester == len(hiphop):
-                        print("Nincs ilyen versenyző a nyilvántartásban!")
-                        tester = 0
+                            f.writelines(line)
 
-                    else:
-                        if dancer1.entryFeePaid == True:
-                            print("A versenyző már befizette a nevezési díjat!\n")
+        elif style_select == 2:  # contemporary_list
+            dancer1 = Contemporary("", Category.SOLO)
+            print("\nA nyilvántartásban szereplő versenyzők: " + str(contemporary_names) + "\n")
+            name = input("Adja meg a táncos / formáció nevét, aki a befizetést tette! ")
+            for element in contemporary_list:
+                if name == element[0]:
+                    dancer1 = Contemporary(element[0], element[1], element[2], element[3], element[4],
+                                           element[5])
+                    person_index = contemporary_list.index(element)
+                else:
+                    tester += 1
+            if tester == len(contemporary_list):
+                print("\nNincs ilyen versenyző a nyilvántartásban!\n")
+                tester = 0
+
+            else:
+                if dancer1.entryFeePaid is True:
+                    print("\nA versenyző már befizette a nevezési díjat!\n")
+                else:
+                    print(dancer1.name + " rendezte a(z) " + str(dancer1.category.value) + " Ft tartozását!\n")
+                    dancer1.entryFeePaid = True
+
+                # fájlban átírás
+                with open("contemporary.txt", "r") as f:
+                    get_all = f.readlines()
+
+                with open("contemporary.txt", 'w') as f:
+                    for i, line in enumerate(get_all, 0):
+                        if i == person_index:
+                            f.writelines(
+                                dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
+                                + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
+                                    dancer1.subscoreCreativity) + "\t" + str(dancer1.score) + "\n")
                         else:
-                            print(dancer1.name + " rendezte a(z) " + str(dancer1.category.value) + " Ft tartozását!\n")
-                            dancer1.entryFeePaid = True
-
-                        # fájlban átírás
-                        with open("hiphop.txt", "r") as f:
-                            get_all = f.readlines()
-
-                        with open("hiphop.txt", 'w') as f:
-                            for i, line in enumerate(get_all, 0):
-                                if i == personIndex:
-                                    f.writelines(
-                                        dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
-                                        + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
-                                            dancer1.subscoreStyle) + "\t" + str(dancer1.score) + "\n")
-                                else:
-                                    f.writelines(line)
-
-                elif styleSelect == 2:  # contemporary
-                    print("A nyilvántartásban szereplő versenyzők:", contemporaryNames)
-                    name = input("Adja meg a táncos / formáció nevét, aki a befizetést tette! ")
-                    for element in contemporary:
-                        if name == element[0]:
-                            dancer1 = Contemporary(element[0], element[1], element[2], element[3], element[4], element[5])
-                            personIndex = contemporary.index(element)
-                        else:
-                            tester += 1
-                    if tester == len(contemporary):
-                        print("Nincs ilyen versenyző a nyilvántartásban!")
-                        tester = 0
-
-                    else:
-                        if dancer1.entryFeePaid == True:
-                            print("A versenyző már befizette a nevezési díjat!\n")
-                        else:
-                            print(dancer1.name + "rendezte a(z) " + str(dancer1.category.value) + " Ft tartozását!\n")
-                            dancer1.entryFeePaid = True
-
-                        # fájlban átírás
-                        with open("contemporary.txt", "r") as f:
-                            get_all = f.readlines()
-
-                        with open("contemporary.txt", 'w') as f:
-                            for i, line in enumerate(get_all, 0):
-                                if i == personIndex:
-                                    f.writelines(
-                                        dancer1.name + "\t" + str(dancer1.category) + "\t" + str(dancer1.entryFeePaid)
-                                        + "\t" + str(dancer1.subscoreTechnique) + "\t" + str(
-                                            dancer1.subscoreCreativity) + "\t" + str(dancer1.score) + "\n")
-                                else:
-                                    f.writelines(line)
-
-        elif type(tempStyle) == int:
-            print("Hibás adatmegadás, kérem a megfelelő egész számot írja be a stílus kiválasztásához!")
+                            f.writelines(line)
 
 
-def winner(hiphop: list, contemporary: list) -> None:
+def winner(hiphop_list: list, contemporary_list: list) -> None:
     """
     A versenyzők közül a legnagyobb pontszámmal rendelkezők nevét megadja
-    :param hiphop: Az eddig felvitt hiphop táncosok adatait tartalmazó lista.
-    :param contemporary: Az eddig felvitt kortárs táncosok adatait tartalmazó lista.
+    :param hiphop_list: Az eddig felvitt hiphop_list táncosok adatait tartalmazó lista.
+    :param contemporary_list: Az eddig felvitt kortárs táncosok adatait tartalmazó lista.
     :return: Megadja mindkét stílusban a legtöbb pontszámmal rendelkezők nevét (void)
     """
 
-    hiphopScores = []
-    contemporaryScores = []
-    for i in range(len(hiphop)):
-        hiphopScores.append(hiphop[i][5])
+    hiphop_scores = []
+    contemporary_scores = []
+    for i in range(len(hiphop_list)):
+        hiphop_scores.append(hiphop_list[i][5])
 
-    for i in range(len(contemporary)):
-        contemporaryScores.append(contemporary[i][5])
+    for i in range(len(contemporary_list)):
+        contemporary_scores.append(contemporary_list[i][5])
 
-    maxHiphop = max(hiphopScores)
-    for i in range(len(hiphop)):
-        if hiphop[i][5] == maxHiphop:
-            print("A hiphop kategória nyertese(i): " + hiphop[i][0])
+    print("\n")
 
-    maxContemporary = max(contemporaryScores)
-    for i in range(len(contemporary)):
-        if contemporary[i][5] == maxContemporary:
-            print("A kortárs kategória nyertese(i): " + contemporary[i][0])
+    max_hiphop = max(hiphop_scores)
+    for i in range(len(hiphop_list)):
+        if hiphop_list[i][5] == max_hiphop:
+            print("A hiphop kategória nyertese(i): " + hiphop_list[i][0])
+
+    max_contemporary = max(contemporary_scores)
+    for i in range(len(contemporary_list)):
+        if contemporary_list[i][5] == max_contemporary:
+            print("A kortárs kategória nyertese(i): " + contemporary_list[i][0])
 
     print("\n")
 
 # main
 
 
-print("Üdvözlöm a IX. Országos Tánckupa nyilvántartó programjában.\n")
+print("\nÜdvözlöm a IX. Országos Tánckupa nyilvántartó programjában.\n")
 
 menu = ""
 fileHipHop = "hiphop.txt"
 fileContemporary = "contemporary.txt"
-hiphop = listUpload(fileHipHop)
-contemporary = listUpload(fileContemporary)
+hiphop = list_upload(fileHipHop)
+contemporary = list_upload(fileContemporary)
 
 while menu != "0":
     menu_options()
     menu = input()
 
     if menu == "1":
-        newCompetitor(hiphop, contemporary)
-        hiphop = listUpload(fileHipHop)
-        contemporary = listUpload(fileContemporary)
+        new_competitor(hiphop, contemporary)
+        hiphop = list_upload(fileHipHop)
+        contemporary = list_upload(fileContemporary)
 
     elif menu == "2":
-        audienceAward(hiphop, contemporary)
-        hiphop = listUpload(fileHipHop)
-        contemporary = listUpload(fileContemporary)
+        audience_award(hiphop, contemporary)
+        hiphop = list_upload(fileHipHop)
+        contemporary = list_upload(fileContemporary)
 
     elif menu == "3":
-        entryFee(hiphop, contemporary)
-        hiphop = listUpload(fileHipHop)
-        contemporary = listUpload(fileContemporary)
+        entry_fee(hiphop, contemporary)
+        hiphop = list_upload(fileHipHop)
+        contemporary = list_upload(fileContemporary)
 
     elif menu == "4":
         winner(hiphop, contemporary)
-        hiphop = listUpload(fileHipHop)
-        contemporary = listUpload(fileContemporary)
+        hiphop = list_upload(fileHipHop)
+        contemporary = list_upload(fileContemporary)
 
     elif menu == "0":
         break
 
     else:
-        print("Hibás menüpontot adott meg.")
+        print("\nHibás menüpontot adott meg, adja meg a megfelelő egész számot!\n")

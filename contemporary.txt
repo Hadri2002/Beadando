@@ -1,5 +1,9 @@
 Károly Karolina	Category.SOLO	False	7	4	11
-Early birds	Category.TEAM	True	6	9	15
+Early birds	Category.TEAM	True	6	9	16
 Aurora	Category.TEAM	True	6	4	11
 Bende	Category.SOLO	True	3	5	9
 Ró	Category.SOLO	True	9	5	15
+Ribcage	Category.DUO	False	4	5	9
+Galaxisok	Category.DUO	True	5	8	13
+Deepslate	Category.DUO	False	5	5	11
+Ginny	Category.SOLO	True	7	3	10
