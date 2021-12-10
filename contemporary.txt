@@ -1,4 +1,4 @@
-Károly Karolina	Category.SOLO	False	7	4	11
+Károly Karolina	Category.SOLO	True	7	4	11
 Early birds	Category.TEAM	True	6	9	16
 Aurora	Category.TEAM	True	6	4	11
 Bende	Category.SOLO	True	3	5	9

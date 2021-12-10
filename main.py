@@ -25,22 +25,22 @@ while menu != "0":
     menu_options()
     menu = input()
 
-    if menu == "1":
+    if menu == "1":  # Új versenyző
         new_competitor(hiphop, contemporary)
         hiphop = list_upload(fileHipHop)
         contemporary = list_upload(fileContemporary)
 
-    elif menu == "2":
+    elif menu == "2":  # Közönségdíj
         audience_award(hiphop, contemporary)
         hiphop = list_upload(fileHipHop)
         contemporary = list_upload(fileContemporary)
 
-    elif menu == "3":
+    elif menu == "3":  # Nevezési díj
         entry_fee(hiphop, contemporary)
         hiphop = list_upload(fileHipHop)
         contemporary = list_upload(fileContemporary)
 
-    elif menu == "4":
+    elif menu == "4":  # Nyertesek
         winner(hiphop, contemporary)
         hiphop = list_upload(fileHipHop)
         contemporary = list_upload(fileContemporary)
